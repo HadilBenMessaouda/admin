@@ -3,23 +3,17 @@ import 'package:admin/dashbord_screen.dart';
 import 'package:admin/user.dart';
 import 'package:admin/users_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    // ChangeNotifierProvider(
-    //   create: (context) => UserProvider(),
-    //   child: 
-      MyApp(),
-  //),
-  );
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
   final List<User> allUsers = [];
-   MyApp({super.key});
+ //  MyApp({super.key});
+     final Store store = Store();
+   final List<NewsArticle> allNews = [];   
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,12 +28,14 @@ class MyApp extends StatelessWidget {
         '/': (context) => LogInPage(),
         '/dashboard': (context) => DashboardPage(),
         '/ges_user': (context) => UsersPage(allUsers: [],),
-        // '/signin': (context) => SignInPage(),
+        '/news': (context) => AllNewsDisplayPage(allNews: allNews,),
+    
         // '/interface': (context) => Interface1(),
         // '/store': (context) => StorePage(),
       },
       
      // home:UsersPage(allUsers: allUsers,),
      );
+
   }
 }
