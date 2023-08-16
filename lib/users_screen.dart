@@ -11,10 +11,10 @@ class UsersPage extends StatefulWidget {
   final List<User> allUsers;
   UsersPage({required this.allUsers});
  
-
 final TextEditingController idController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+
 
   @override
   _UsersPageState createState() => _UsersPageState();
@@ -22,39 +22,29 @@ final TextEditingController idController = TextEditingController();
 
 class _UsersPageState extends State<UsersPage> {
 
-
-  User? selectedOption ;
-static const int numItems =5;
-List<User> allUsers = List.generate(numItems, (index) => User(
-   id: "1", 
-   name: "eya", 
-   email: "eya@gmail.com"));
-
-   
-  // List<User> allUsers = [
-  //  User(
-  //  id: "1", 
-  //  name: "eya", 
-  //  email: "eya@gmail.com")
-  // ];
-
-
-
-  @override
-  Widget build(BuildContext context) {
-
 final TextEditingController idController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
+ // User? selectedOption ;
+// static const int numItems =5;
+// List<User> allUsers = List.generate(numItems, (index) => User(
+//    id: "1", 
+//    name: "eya", 
+//    email: "eya@gmail.com"));
+
+
 
  void _addUser() {
-    // final userProvider = Provider.of<UserProvider>(context, listen: false);
+  setState(() {
+  String id = idController.text;
+  String name = nameController.text;
+  String email = emailController.text;
 
     User newUser = User(
-      email: emailController.text,
-      name: nameController.text,
-      id: idController.text, 
+      email: email,
+      name: name,
+      id: id, 
     );
 
    // userProvider.addUser(newUser);
@@ -63,8 +53,7 @@ final TextEditingController idController = TextEditingController();
     emailController.clear();
     nameController.clear();
     idController.clear(); 
-
-   // Navigator.pop(context); // Navigate back to the admin dashboard
+});
   }
 
     
@@ -210,8 +199,6 @@ Future<void> _dialogBuilderAdd(BuildContext context) {
                       ),
               onPressed: () {
                 _addUser();
-               
-                print('object');
                  Navigator.of(context).pop();
             
               },
@@ -246,118 +233,14 @@ Future<void> _dialogBuilderAdd(BuildContext context) {
     );
   }
 
- void _deleteNews(int index) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Delete News Article'),
-          content: Text('Are you sure you want to delete this news article?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog without deleting
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  widget.allUsers.removeAt(index);
-                });
-                Navigator.of(context).pop(); // Close the dialog after deleting the article
-              },
-              child: Text('Delete'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-Future<void> _dialogBuilderDelete(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Would you really want to delete this user ?',
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: Text(
-            'If you delete this user he will be deleted definitlly\n'
-            'he will never be able to enter to the mobile app\n',
-            style: TextStyle(
-              fontSize: 16,
 
-            ),
-          ),
-          actions: <Widget>[
-           Padding(
-                  padding: EdgeInsets.symmetric(vertical:20)
-                ),
-           
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              child: Text(
-                        'Yes',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        backgroundColor: Colors.red,
-                        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30),
-                      ),
-              onPressed: () {
-                setState(() {
-                 // widget.allUsers.removeAt(index);
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal:30)
-                ),
-            ElevatedButton(
-              child: Text(
-                        'No',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        backgroundColor: Colors.red,
-                        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30),
-                      ),
-              
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],),
-          ],
-        );
-      },
-    );
-  }
-
-
-// Future<void> _dialogBuilderUpdate(BuildContext context) {
-  
+   
 void _editUser(int index) async {
+  User user =widget.allUsers[index];
+    TextEditingController idController = TextEditingController(text: user.id);
+    TextEditingController nameController = TextEditingController(text: user.name);
+    TextEditingController emailController = TextEditingController(text: user.email);
+  
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -375,7 +258,7 @@ void _editUser(int index) async {
                 ),
             
                 TextFormField(
-                  controller: widget.idController,
+                  controller: idController,
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 18.0,
@@ -408,7 +291,7 @@ void _editUser(int index) async {
                   padding: EdgeInsets.symmetric(vertical:10)
                 ),
                 TextFormField(
-                  controller: widget.nameController,
+                  controller: nameController,
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 18.0,
@@ -441,7 +324,7 @@ void _editUser(int index) async {
                   padding: EdgeInsets.symmetric(vertical:10)
                 ),
                 TextFormField(
-                  controller: widget.emailController,
+                  controller: emailController,
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 18.0,
@@ -474,7 +357,6 @@ void _editUser(int index) async {
                   padding: EdgeInsets.symmetric(vertical:20)
                 ),
               
-               // SizedBox(height: 20,),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -499,7 +381,6 @@ void _editUser(int index) async {
                     id: idController.text,
                     name: nameController.text,
                     email: emailController.text,
-                   
                   );
                  widget.allUsers[index] = editedUser;
                
@@ -514,7 +395,7 @@ void _editUser(int index) async {
                   // );
               //    widget.allUsers[index] = editedUser;
                
-             //   Navigator.pop(context, widget.allUsers); // Close the dialog after saving changes
+                Navigator.of(context).pop(); // Close the dialog after saving changes
               
             }
             ),
@@ -551,6 +432,83 @@ void _editUser(int index) async {
   }
 
 
+ void _deleteNews(int index) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delete User',
+           style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),),
+          content: Text('Are you sure you want to delete this user? \n If you delete this user he will be deleted definitlly\n he will never be able to enter to the mobile app\n',
+           style: TextStyle(
+              fontSize: 16,
+          ),),
+          actions: [
+            Padding(
+                  padding: EdgeInsets.symmetric(vertical:20)
+                ),
+           
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              child: Text(
+                 'Delete',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        backgroundColor: Colors.red,
+                        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30),
+                      ),
+              onPressed: () {
+              setState(() {
+                  widget.allUsers.removeAt(index);
+                });
+                Navigator.of(context).pop(); // Close the dialog after deleting the article
+              },
+            ),
+            
+            Padding(
+                  padding: EdgeInsets.symmetric(horizontal:30)
+                ),
+            ElevatedButton(
+              child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        backgroundColor: Colors.red,
+                        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30),
+                      ),
+              
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
      
@@ -675,7 +633,12 @@ void _editUser(int index) async {
                   padding: EdgeInsets.symmetric(vertical:40)
                 ),
                
-               
+            ListView.builder(
+               shrinkWrap: true,
+        itemCount: widget.allUsers.length,
+        itemBuilder: (context, index) {
+          User user = widget.allUsers[index];
+          return    
             DataTable(
           columns: [
             DataColumn(label: Text('')),
@@ -685,13 +648,13 @@ void _editUser(int index) async {
             DataColumn(label: Text('')),
             DataColumn(label: Text('')),
           ],
-          rows: List<DataRow>.generate(numItems,(index) => 
+          rows: [
             DataRow(
               cells: [
               DataCell(Checkbox(value: false, onChanged: (bool? value) { },)),
-              DataCell(Text('$User.id')),
-              DataCell(Text('$User.name')),
-              DataCell(Text('$User.email')),
+              DataCell(Text('${user.id}')),
+              DataCell(Text('${user.name}')),
+              DataCell(Text('${user.email}')),
               DataCell(
                 ElevatedButton( 
                     onPressed: () {
@@ -727,8 +690,8 @@ void _editUser(int index) async {
                 foregroundColor: Colors.white),
                 ),),
               ]),
-          ),
-                ),
+            ]  );
+        }),    
           ]  
                
           
