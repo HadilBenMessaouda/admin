@@ -25,10 +25,17 @@ class SideMenu extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Notifications'),
+            leading: Icon(Icons.new_releases_outlined),
+            title: Text('News'),
             onTap: () {
-              // Naviguer vers la page d'accueil
+            Navigator.pushNamed(context, '/news');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.store),
+            title: Text('Store'),
+            onTap: () {
+             Navigator.pushNamed(context, '/store');
             },
           ),
           ListTile(

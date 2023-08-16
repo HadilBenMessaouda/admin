@@ -1,8 +1,12 @@
 import 'package:admin/admin_login.dart';
 import 'package:admin/dashbord_screen.dart';
+import 'package:admin/news.dart';
+import 'package:admin/store.dart';
 import 'package:admin/user.dart';
 import 'package:admin/users_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'allNews.dart';
 
 void main() {
   runApp( MyApp());
@@ -29,8 +33,7 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => DashboardPage(),
         '/ges_user': (context) => UsersPage(allUsers: [],),
         '/news': (context) => AllNewsDisplayPage(allNews: allNews,),
-    
-        // '/interface': (context) => Interface1(),
+        '/store': (context) => StoreApp(store: store,),
         // '/store': (context) => StorePage(),
       },
       
