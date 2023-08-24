@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'news.dart';
+import 'package:intl/intl.dart'; // Import the intl package
+
 
 class AllNewsDisplayPage extends StatefulWidget {
   final List<NewsArticle> allNews;
@@ -16,6 +18,11 @@ class _AllNewsDisplayPageState extends State<AllNewsDisplayPage> {
   TextEditingController _imageController = TextEditingController();
   TextEditingController _authorController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
+    String _formatDateTime(DateTime dateTime) {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+    return formatter.format(dateTime.toLocal());
+  }
+
 
   void _addNews() {
     setState(() {
@@ -75,25 +82,29 @@ class _AllNewsDisplayPageState extends State<AllNewsDisplayPage> {
                 controller: authorController,
                 decoration: InputDecoration(labelText: 'Author name'),
               ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: selectedDate,
-                    firstDate: DateTime(2020, 1, 1),
-                    lastDate: DateTime.now(),
-                  );
+              Padding(padding: EdgeInsets.symmetric(vertical: 20),),
 
-                  if (pickedDate != null) {
-                    setState(() {
-                      selectedDate = pickedDate;
-                    });
-                  }
-                },
-                child: Text('Select Publish Date'),
-              ),
-              Text('Publish Date: ${selectedDate.toLocal().toString()}'),
+              //SizedBox(height: 16),
+      // Inside the AlertDialog builder for editing news articles
+ElevatedButton(
+  onPressed: () async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2020, 1, 1),
+      lastDate: DateTime.now(),
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    }
+  },
+  child: Text('Select Publish Date'),
+),
+Text('Publish Date: ${_formatDateTime(selectedDate)}'), // Display date and time
+
             ],
           ),
           actions: [
@@ -188,7 +199,9 @@ class _AllNewsDisplayPageState extends State<AllNewsDisplayPage> {
                           controller: _authorController,
                           decoration: InputDecoration(labelText: 'Author name'),
                         ),
-                        SizedBox(height: 16),
+                                    Padding(padding: EdgeInsets.symmetric(vertical: 20),),
+
+                        // SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: () async {
                             DateTime? pickedDate = await showDatePicker(
@@ -234,7 +247,9 @@ class _AllNewsDisplayPageState extends State<AllNewsDisplayPage> {
               
             
           ),
-          SizedBox(width: 5, height: 10,),
+          Padding(padding: EdgeInsets.symmetric(vertical: 20),),
+
+          // SizedBox(width: 5, height: 10,),
           
         ],
       ),
@@ -265,7 +280,9 @@ class _AllNewsDisplayPageState extends State<AllNewsDisplayPage> {
                         ),
                         child: Text('Edit'),
                       ),
-                      SizedBox(width: 8),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 20),),
+
+                      // SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: () {
                           _deleteNews(index);

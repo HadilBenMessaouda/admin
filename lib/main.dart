@@ -11,7 +11,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final Store store = Store();
    final List<NewsArticle> allNews = [];   
   @override
   Widget build(BuildContext context) {
@@ -21,6 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
          '/': (context) => AllNewsDisplayPage(allNews: allNews,),}
+        
       //     initialRoute: '/',
       //  routes: {
       //     '/': (context) => StoreApp(store: store)}

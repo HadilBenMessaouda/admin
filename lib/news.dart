@@ -105,18 +105,23 @@ Navigator.push(
               controller: _authorController,
               decoration: InputDecoration(labelText: 'Enter author name'),
             ),
-            SizedBox(height: 16),
+            Padding(padding: EdgeInsets.symmetric(vertical: 20),),
+            // SizedBox(height: 16),
             ElevatedButton(
               onPressed: _selectDate,
               child: Text('Select Publish Date'),
             ),
             Text('Publish Date: ${_selectedDate.toLocal().toString()}'),
-            SizedBox(height: 16),
+            Padding(padding: EdgeInsets.symmetric(vertical: 20),),
+
+            // SizedBox(height: 16),
             ElevatedButton(
               onPressed: _addNews,
               child: Text('Add News'),
             ),
-            SizedBox(height: 16),
+          Padding(padding: EdgeInsets.symmetric(vertical: 20),),
+
+            // SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
                 itemCount: newsList.length,
